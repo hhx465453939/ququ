@@ -6,6 +6,11 @@ yarn-error.log*
 pnpm-debug.log*
 yarn.lock*
 
+# vibecoding拉的屎
+.claude
+.codex
+.gemini
+.cursor
 
 # Production builds
 dist/

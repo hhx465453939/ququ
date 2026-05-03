@@ -231,14 +231,18 @@ class FunASRManager {
    * 获取模型缓存路径
    */
   getModelCachePath() {
+    // 项目内模型路径（优先级最高）
+    const projectModelsPath = path.join(__dirname, '..', '..', 'models', 'damo');
+
     const baseCachePath =
       process.env.MODELSCOPE_CACHE || path.join(os.homedir(), '.cache', 'modelscope');
 
-    // 可能的候选路径 - 添加 hub/models/damo 路径
+    // 可能的候选路径 - 项目内路径优先，然后是系统缓存
     const candidates = [
+      projectModelsPath,  // 项目内模型目录
       path.join(baseCachePath, 'damo'),
       path.join(baseCachePath, 'hub', 'damo'),
-      path.join(baseCachePath, 'hub', 'models', 'damo'),  // 新增：支持 hub/models/damo 结构
+      path.join(baseCachePath, 'hub', 'models', 'damo'),
       path.join(baseCachePath, 'models', 'damo'),
     ];
 
@@ -258,7 +262,7 @@ class FunASRManager {
       return found;
     }
 
-    throw new Error(`未找到有效的 damo 模型目录，请检查 MODELSCOPE_CACHE 或模型安装路径`);
+    throw new Error(`未找到有效的 damo 模型目录，请检查项目内 models/damo/ 目录或 MODELSCOPE_CACHE 环境变量`);
   }
 
 
